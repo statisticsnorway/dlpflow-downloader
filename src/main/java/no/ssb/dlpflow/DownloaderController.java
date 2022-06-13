@@ -26,7 +26,7 @@ public class DownloaderController {
     @Get(value="/dlpflow/download/{url}", consumes = {MediaType.MULTIPART_FORM_DATA})
     public HttpResponse<byte[]> downloadJar(Principal principal, String url) throws IOException {
         log.info("AUDIT {}", PrincipalUtil.auditInfoOf(principal));
-
+        log.info("get: {}", url);
         String fileName = url.substring(url.lastIndexOf('/') + 1, url.length());
         if (Files.notExists(Paths.get(fileName))) {
             downloadService.download(url);
