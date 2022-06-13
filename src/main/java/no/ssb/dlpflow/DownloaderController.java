@@ -37,10 +37,11 @@ public class DownloaderController {
                 .header("Content-disposition", "attachment; filename=\""+fileName+"\"");
     }
 
-    @VisibleForTesting
-    public HttpResponse<byte[]> downloadTest() throws IOException {
+    @Get(value="/dlpflow/test", consumes = {MediaType.MULTIPART_FORM_DATA})
+    public HttpResponse<byte[]> downloadTest(Principal principal) throws IOException {
+        log.info("AUDIT {}", PrincipalUtil.auditInfoOf(principal));
         String url = "https://repo1.maven.org/maven2/org/xerial/sqlite-jdbc/3.36.0.3/sqlite-jdbc-3.36.0.3.jar";
-        return this.downloadJar(null, url);
+        return this.downloadJar(principal, url);
     }
 
 }
